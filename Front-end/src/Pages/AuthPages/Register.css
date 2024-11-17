@@ -1,0 +1,120 @@
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(white);
+    padding: 20px;
+  }
+  .register-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 15px rgba(0, 0, 0.1, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  .register-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .register-header h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d3748;
+  }
+  .input-field {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #2d3748;
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+  }
+  .submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #1d4ed8;
+    color: white;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #2563eb;
+  }
+  
+  .submit-button:disabled {
+    background-color: #d1d5db;
+    cursor: not-allowed;
+  }
+  .message {
+    text-align: center;
+    color: #e53e3e;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .link {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #1d4ed8;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+.role-selection {
+  margin: 1rem 0;
+}
+
+.role-label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.role-options {
+  display: flex;
+  gap: 1rem; 
+}
+
+.role-options label {
+  font-size: 1rem;
+  color: #2d3748;
+  cursor: pointer;
+}
+/* Common styles for messages */
+.message {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  .success {
+    background-color: rgb(120, 226, 120);
+    color:white;
+  }
+  .error {
+    background-color: rgb(245, 111, 111);
+    color:white;
+  }
+  

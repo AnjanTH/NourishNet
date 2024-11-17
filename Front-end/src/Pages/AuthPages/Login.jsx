@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+
+import { Link,useNavigate } from 'react-router-dom';
+import './Login.css'; 
 
 function Login() {
   const [email, setEmail] = useState(""); 
@@ -33,7 +35,7 @@ function Login() {
       }
     } catch (error) {
       console.error('Login failed:', error);
-      navigate('/login')
+      navigate('/login');
       if (error.response) {
         if (error.response.status === 400 && error.response.data?.redirectToRegister) {
           navigate('/register');
@@ -51,48 +53,44 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-green-200">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Login Here</h2>
+    <div className="login-container">
+      <div className="login-card">
+        <header className="login-header">
+          <h2>Login Here</h2>
+          <p>Please enter your credentials to login</p>
+        </header>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="email">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              required
-            />
-          </div>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="input-field"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input-field"
+            required
+          />
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 px-5 ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'} text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            className="submit-button"
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        {message && <p className="mt-4 text-center text-sm text-red-500">{message}</p>}
+        
+        {message && <p className="message">{message}</p>}
+
+        <Link to="/register" className="link">
+          Don't have an account? Register here
+        </Link>
       </div>
     </div>
   );
