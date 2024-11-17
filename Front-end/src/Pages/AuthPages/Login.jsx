@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -13,31 +12,33 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!username || !password) {
+    if (!email || !password) {
       setMessage('Please fill in all fields.');
       return;
     }
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/login', {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        'http://localhost:8080/login', 
+        { email, password }, 
+        { withCredentials: true } 
+      );
+
       if (response?.status === 200) {
         setMessage('Login successful!');
-        const loggedInUser = { username };
-        localStorage.setItem('user', JSON.stringify(loggedInUser));
-        setTimeout(() => navigate('/'), 1000); 
+        localStorage.setItem('user', JSON.stringify(response.data.user)); 
+        setTimeout(() => navigate('/Dashboard'), 1000); 
       } else {
-        setMessage('Unexpected response format');
+        setMessage('Unexpected response format.');
       }
     } catch (error) {
       console.error('Login failed:', error);
+      navigate('/login')
       if (error.response) {
         if (error.response.status === 400 && error.response.data?.redirectToRegister) {
           navigate('/register');
         } else {
-          setMessage(error.response.data?.message || 'An error occurred during login');
+          setMessage(error.response.data?.message || 'An error occurred during login.');
         }
       } else if (error.request) {
         setMessage('No response from server. Please try again later.');
@@ -56,16 +57,17 @@ function Login() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="username">
-              Username
+            <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="email">
+              Email
             </label>
             <input
-              type="text"
-              id="username"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              required
             />
           </div>
           <div>
@@ -79,6 +81,7 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              required
             />
           </div>
           <button
