@@ -1,27 +1,48 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import './Register.css'; 
+import './Register.css';
 
 function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [location, setLocation] = useState("");
-  const [pincode, setPincode] = useState("");
-  const [role, setRole] = useState("user");
-  const [message, setMessage] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [location, setLocation] = useState('');
+  const [pincode, setPincode] = useState('');
+  const [role, setRole] = useState('user');
+  const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+  };
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; 
+    return passwordRegex.test(password);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!username || !email || !password || !location || !pincode || !role) {
       setMessage('Please fill in all fields.');
       return;
     }
+
+    if (!validateEmail(email)) {
+      setMessage('Please enter a valid email address.');
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setMessage('Password must be at least 8 characters long and contain at least one letter and one number.');
+      return;
+    }
+
     setLoading(true);
+
     try {
       const response = await axios.post(
         'http://localhost:8080/register',
@@ -38,7 +59,7 @@ function Register() {
     } catch (error) {
       console.error('Registration failed:', error);
       if (error.response) {
-        if (error.response.data?.message === "User already exists") {
+        if (error.response.data?.message === 'User already exists') {
           setMessage('User already exists. Redirecting to login...');
           setTimeout(() => navigate('/login'), 1500);
         } else {
@@ -103,30 +124,30 @@ function Register() {
             required
           />
           <div className="role-selection">
-  <label className="role-label">Role:</label>
-  <div className="role-options">
-    <label>
-      <input
-        type="radio"
-        name="role"
-        value="user"
-        checked={role === "user"}
-        onChange={(e) => setRole(e.target.value)}
-      />
-      User
-    </label>
-    <label>
-      <input
-        type="radio"
-        name="role"
-        value="donor"
-        checked={role === "donor"}
-        onChange={(e) => setRole(e.target.value)}
-      />
-      Donor
-    </label>
-  </div>
-</div>
+            <label className="role-label">Role:</label>
+            <div className="role-options">
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="user"
+                  checked={role === 'user'}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+                User
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="donor"
+                  checked={role === 'donor'}
+                  onChange={(e) => setRole(e.target.value)}
+                />
+                Donor
+              </label>
+            </div>
+          </div>
 
           <button
             type="submit"
@@ -136,14 +157,14 @@ function Register() {
             {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
-        {message && (
-  <p
-    className={`message ${message.includes('successful') ? 'success' : 'error'}`}
-  >
-    {message}
-  </p>
-)}
 
+        {message && (
+          <p
+            className={`message ${message.includes('successful') ? 'success' : 'error'}`}
+          >
+            {message}
+          </p>
+        )}
 
         <Link to="/login" className="link">
           Already have an account? Login here

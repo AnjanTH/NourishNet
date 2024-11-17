@@ -19,8 +19,6 @@ const Home = () => {
             Get Started
           </Link>
         </header>
-
-        {/* Features Section */}
         <section className="home-features">
           <h2>Features</h2>
           <div className="features-grid">
@@ -38,8 +36,6 @@ const Home = () => {
             </div>
           </div>
         </section>
-
-        {/* Impact Stats Section with Animation */}
         <section className="impact-stats">
           <h2>Our Impact</h2>
           <div className="stats-grid">
@@ -63,8 +59,6 @@ const Home = () => {
             </div>
           </div>
         </section>
-
-        {/* Social Proof */}
         <section className="social-proof">
           <p>
             "FoodLink helped us save thousands of meals and make a real difference in our community!"
@@ -72,8 +66,6 @@ const Home = () => {
             - NGO Partner
           </p>
         </section>
-
-        {/* Call to Action */}
         <section className="cta-section">
           <h2>Join the Movement</h2>
           <p>Start donating today and make an impact!</p>

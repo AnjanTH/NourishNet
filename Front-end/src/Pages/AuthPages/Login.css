@@ -84,4 +84,71 @@
   .link:hover {
     text-decoration: underline;
   }
+  /* Login.css */
+.profile-container {
+    position: relative;
+    margin-top: 20px;
+  }
+  
+  .profile-icon {
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #007bff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profile-icon img {
+    width: 100%;
+    border-radius: 50%;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 200px;
+    z-index: 10;
+  }
+  
+  .dropdown-menu p {
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  
+  .logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .logout-btn:hover {
+    background-color: #c0392b;
+  }
+  
+  .link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  
   
