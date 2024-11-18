@@ -4,6 +4,7 @@ import PageHome from "./Pages/Home/PageHome";
 import Register from "./Pages/AuthPages/Register";
 import Login from "./Pages/AuthPages/Login";
 import Dashboard from "./Pages/Dashboard.jsx/Dashboard";
+import RecipeGenerator from "./Pages/Foodrecipe/FoodRecipes";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />}/>
+          <Route path="/recipes" element={<RecipeGenerator/>}/>
         </Routes>
       </Router>
     </React.StrictMode>

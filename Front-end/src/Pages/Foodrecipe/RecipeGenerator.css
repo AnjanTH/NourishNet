@@ -1,0 +1,95 @@
+/* General container styles */
+.recipe-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Title styling */
+.title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Input field styling */
+.ingredients-input {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.ingredients-input:focus {
+    border-color: #4CAF50;
+}
+
+/* Button styling */
+.generate-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.generate-button:hover {
+    background-color: #45a049;
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Recipe output styling */
+.recipe-output {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.recipe-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.recipe-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    color: #333;
+    white-space: pre-wrap; /* Ensures new lines are respected */
+    line-height: 1.6;
+}
+
+.recipe-content p {
+    margin-bottom: 15px;
+}
+
+.recipe-content ul {
+    margin-left: 20px;
+}
+
+.recipe-content li {
+    margin-bottom: 5px;
+}
+
