@@ -42,20 +42,23 @@ function Dashboard() {
         <h1>Dashboard</h1>
         <nav style={{ display: "flex", alignItems: "center", gap: "15px" }}>
           <div style={{ position: "relative" }}>
-            <NavLink
-              to="#"
-              onClick={toggleDropdown}
-              style={{
-                textDecoration: "none",
-                color: "#555",
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-                fontWeight: "bold",
-              }}
-            >
-              <FaUserCircle size={24} />
-            </NavLink>
+          <NavLink
+           to="#"
+            onClick={toggleDropdown}
+           style={{
+           textDecoration: "none",
+           color: "#555",
+           display: "flex",
+           flexDirection: "column", 
+           alignItems: "center",
+           gap: "5px",
+          fontWeight: "bold",
+  }}
+>
+  <FaUserCircle size={24} />
+  <span>My Profile</span>
+</NavLink>
+
             {dropdownOpen && userData && (
               <div className="dropdown-menu">
                 <div className="dropdown-item">

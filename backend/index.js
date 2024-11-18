@@ -90,16 +90,20 @@ function isloggedin(req, res, next) {
         return res.status(403).json({ message: "Invalid token" });
     }
 }
-app.get('/profile', isloggedin, (req, res) => {
-    if (!req.user) {
-        return res.status(404).json({ message: "User does not exist" });
+app.get('/profile', isloggedin, async (req, res) => {
+    try {
+      const user = await userModel.findById(req.user.userid, { username: 1, email: 1, location: 1, pincode: 1 });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+  
+      return res.status(200).json({ message: 'Profile fetched successfully.', user });
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      return res.status(500).json({ message: 'Failed to fetch profile.' });
     }
-
-    res.status(200).json({
-        message: "Profile fetched successfully",
-        user: req.user
-    });
-});
+  });
+  
 
 app.listen(8080, () => {
     console.log('Server started on port 8080');
