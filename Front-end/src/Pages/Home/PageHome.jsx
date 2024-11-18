@@ -1,32 +1,82 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./PageHome.css"; // Optional: Add CSS for styling.
+import CountUp from "react-countup";
+import "./PageHome.css";
 
 const Home = () => {
   return (
-    <div className="home-container">
-      <header className="home-header">
-        <h1>Welcome to FoodLink</h1>
-        <p>Connecting restaurants, NGOs, and orphanages to reduce food waste.</p>
-      </header>
-
-      <div className="home-buttons">
-        <Link to="/login" className="btn btn-primary">
-          Login
-        </Link>
-        <Link to="/register" className="btn btn-secondary">
-          Register
-        </Link>
+    <div className="container">
+      <div className="home-container">
+        <header className="home-header">
+          <h1>
+            Connecting to <span style={{ color: "#28a745" }}>Surplus Smiles</span>
+          </h1>
+          <p>
+            Helping to reduce food waste while spreading smiles by connecting
+            restaurants, NGOs, and orphanages.
+          </p>
+          <Link to="/login" className="get-started-btn">
+            Get Started
+          </Link>
+        </header>
+        <section className="home-features">
+          <h2>Features</h2>
+          <div className="features-grid">
+            <div className="feature-item">
+              <h3>Easy Donations</h3>
+              <p>Donate surplus food effortlessly with just a click.</p>
+            </div>
+            <div className="feature-item">
+              <h3>Real-Time Tracking</h3>
+              <p>Track logistics and delivery of your donations in real-time.</p>
+            </div>
+            <div className="feature-item">
+              <h3>Nearby NGOs & Orphanages</h3>
+              <p>Find and connect with local organizations using an interactive map.</p>
+            </div>
+          </div>
+        </section>
+        <section className="impact-stats">
+          <h2>Our Impact</h2>
+          <div className="stats-grid">
+            <div className="stat-item">
+              <p className="rotating-number">
+                <CountUp start={0} end={50000} duration={5} separator="," />
+              </p>
+              <h3>Meals Donated</h3>
+            </div>
+            <div className="stat-item">
+              <p className="rotating-number">
+                <CountUp start={0} end={20000} duration={5} separator="," />
+              </p>
+              <h3>People Helped</h3>
+            </div>
+            <div className="stat-item">
+              <p className="rotating-number">
+                <CountUp start={0} end={150} duration={5} separator="," />
+              </p>
+              <h3>NGOs Reached</h3>
+            </div>
+          </div>
+        </section>
+        <section className="social-proof">
+          <p>
+            "FoodLink helped us save thousands of meals and make a real difference in our community!"
+            <br />
+            - NGO Partner
+          </p>
+        </section>
+        <section className="cta-section">
+          <h2>Join the Movement</h2>
+          <p>Start donating today and make an impact!</p>
+          <Link to="/donate" className="cta-btn">Donate Now</Link>
+        </section>
+        <section className="volunteer-section">
+          <h2>Become a Volunteer</h2>
+          <p>Help distribute food and make a difference in your community.</p>
+          <Link to="/volunteer" className="volunteer-btn">Volunteer Today</Link>
+        </section>
       </div>
-
-      <section className="home-features">
-        <h2>Features</h2>
-        <ul>
-          <li>Donate surplus food easily.</li>
-          <li>Track logistics and delivery in real-time.</li>
-          <li>Find nearby NGOs and orphanages using maps.</li>
-        </ul>
-      </section>
     </div>
   );
 };

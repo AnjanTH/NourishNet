@@ -1,43 +1,52 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import './Login.css';
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [showDropdown, setShowDropdown] = useState(false); // For dropdown visibility
+  const [userData, setUserData] = useState(null); // To store user data (username, etc.)
+  
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!username || !password) {
+
+    if (!email || !password) {
       setMessage('Please fill in all fields.');
       return;
     }
+
     setLoading(true);
+
     try {
-      const response = await axios.post('http://localhost:8000/login', {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        'http://localhost:8080/login',
+        { email, password },
+        { withCredentials: true }
+      );
+
       if (response?.status === 200) {
         setMessage('Login successful!');
-        const loggedInUser = { username };
-        localStorage.setItem('user', JSON.stringify(loggedInUser));
-        setTimeout(() => navigate('/'), 1000); 
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        setUserData(response.data.user); // Save user data after login
+        setTimeout(() => navigate('/Dashboard'), 1000);
       } else {
-        setMessage('Unexpected response format');
+        setMessage('Unexpected response format.');
       }
     } catch (error) {
       console.error('Login failed:', error);
+
       if (error.response) {
+        // Handle server-side errors
         if (error.response.status === 400 && error.response.data?.redirectToRegister) {
           navigate('/register');
         } else {
-          setMessage(error.response.data?.message || 'An error occurred during login');
+          setMessage(error.response.data?.message || 'An error occurred during login.');
         }
       } else if (error.request) {
         setMessage('No response from server. Please try again later.');
@@ -49,48 +58,81 @@ function Login() {
     }
   };
 
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-green-200">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Login Here</h2>
+  // Toggle dropdown visibility
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="username">
-              Username
-            </label>
+  return (
+    <div className="login-container">
+      <div className="login-card">
+        <header className="login-header">
+          <h2>Login Here</h2>
+          <p>Please enter your credentials to login</p>
+        </header>
+
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
             <input
-              type="text"
-              id="username"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input-field"
+              required
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="password">
-              Password
-            </label>
+
+          <div className="input-group">
             <input
               type="password"
-              id="password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="input-field"
+              required
             />
           </div>
+
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 px-5 ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'} text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            className={`submit-button ${loading ? 'loading' : ''}`}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        {message && <p className="mt-4 text-center text-sm text-red-500">{message}</p>}
+
+        {message && <p className={`message ${message.includes('successful') ? 'success' : 'error'}`}>{message}</p>}
+
+        <Link to="/register" className="link">
+          Don't have an account? Register here
+        </Link>
       </div>
+
+      {/* Profile Icon & Dropdown */}
+      {userData && (
+        <div className="profile-container">
+          <div className="profile-icon" onClick={toggleDropdown}>
+            <img src="https://via.placeholder.com/40" alt="Profile" />
+          </div>
+
+          {showDropdown && (
+            <div className="dropdown-menu">
+              <p><strong>Username:</strong> {userData.username}</p>
+              <p><strong>Password:</strong> ********</p>
+              <Link to="/profile" className="link">Go to Profile</Link>
+              <button className="logout-btn" onClick={() => {
+                localStorage.removeItem('user');
+                setUserData(null);
+                navigate('/login');
+              }}>
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
